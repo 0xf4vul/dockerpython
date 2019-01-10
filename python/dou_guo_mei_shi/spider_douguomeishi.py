@@ -11,6 +11,9 @@ import json
 import requests
 
 from multiprocessing import Queue
+from handle_mongo import mongo_info
+from concurrent.futures import ThreadPoolExecutor
+
 
 #创建队列
 queue_list = Queue()
@@ -47,7 +50,9 @@ def handle_request(url,data):
         "Host": "api.douguo.net",
         #"Content-Length": "65"
     }
-    response = requests.post(url=url,headers=header,data=data)
+
+    proxy = {'http': 'http://H79623F667Q3936C:84F1527F3EE09817@http-cla.abuyun.com:9030'}
+    response = requests.post(url=url,headers=header,data=data,proxies=proxy)
     return response
 
 def handle_index():
@@ -106,12 +111,16 @@ def handle_caipu_list(data):
             detail_reponse_dic = json.loads(detail_reponse.text)
             caipu_info["tips"] = detail_reponse_dic["result"]["recipe"]["tips"]
             caipu_info["cookstep"] = detail_reponse_dic["result"]["recipe"]["cookstep"]
-            print(json.dumps(caipu_info))
+            #print(json.dumps(caipu_info))
+            mongo_info.insert_item(caipu_info)
 
         else:
             continue
 
 
 handle_index()
-handle_caipu_list(queue_list.get())
+pool = ThreadPoolExecutor(max_workers=2)
+while queue_list.qsize()>0:
+    pool.submit(handle_caipu_list,queue_list.get())
+
 
