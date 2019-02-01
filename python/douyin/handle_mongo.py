@@ -10,6 +10,8 @@ import pymongo
 from pymongo.collection import Collection
 
 
+
+
 client = pymongo.MongoClient(host='192.168.66.100',port=27017)
 db = client['douyin']
 
@@ -21,6 +23,11 @@ def handle_init_task():
             task_info = {}
             task_info['share_id'] = i.replace('\n','')
             task_id_collections.insert(task_info)
+
+
+def save_task(task):
+    task_collections = Collection(db,'task_id')
+    task_collections.update({'share_id':task['share_id']},task,True)
 
 
 
