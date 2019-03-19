@@ -37,7 +37,7 @@ def handle_appium(info):
 
     #抖音
     if info["appPackage"] == "com.ss.andrpid.ugc.aweme":
-        #根据实际的我这里直接写//android，通过
+        #根据实际的我这里直接写//android，通过uiautomatorviewer.jar
         if WebDriverWait(driver,60).until(lambda x:x.find_element_by_xpath("//android")):
             while True:
                 # 初始鼠标位置，从哪里开始，结束时鼠标位置，到哪里结束
@@ -46,7 +46,7 @@ def handle_appium(info):
 
     #快手
     if info["appPackage"] == "com.smile.gifmaker":
-        # 根据实际的我这里直接写//android
+        #根据实际的我这里直接写//android，通过uiautomatorviewer.jar
         if WebDriverWait(driver, 60).until(lambda x: x.find_element_by_xpath("//android")):
             while True:
                 # 初始鼠标位置，从哪里开始，结束时鼠标位置，到哪里结束
@@ -55,7 +55,7 @@ def handle_appium(info):
 
     #快手
     if info["appPackage"] == "com.ss.android.article.news":
-        # 根据实际的我这里直接写//android
+        #根据实际的我这里直接写//android，通过uiautomatorviewer.jar
         if WebDriverWait(driver, 60).until(lambda x: x.find_element_by_xpath("//android")):
             while True:
                 #初始鼠标位置，从哪里开始，结束时鼠标位置，到哪里结束
